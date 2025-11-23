@@ -91,7 +91,7 @@ function loadImage(file) {
 
 async function downloadAll() {
     const zip = new JSZip();
-    const folder = zip.folder(`instagram_${selectedMode}`);
+    const folder = zip.folder(`telegram_${selectedMode}`);
     
     for (let i = 0; i < allCanvases.length; i++) {
         const canvas = allCanvases[i];
@@ -216,4 +216,5 @@ function downloadCanvas(canvas, filename) {
         a.click();
         URL.revokeObjectURL(url);
     }, 'image/jpeg', 0.95);
+
 }
