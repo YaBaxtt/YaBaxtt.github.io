@@ -11,7 +11,7 @@ html {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    background: radial-gradient(ellipse at bottom, #000000 0%, #030233 100%);
     min-height: 100vh;
     padding: 20px;
     display: flex;
@@ -26,7 +26,7 @@ body.has-results {
 }
 
 .container {
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 20px;
     padding: 40px;
     padding-bottom: 50px;
@@ -84,15 +84,24 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .mode-btn:hover {
     background: #f0f0f0;
+    transform: scaleX(1);
+}
+
+.mode-btn.active::before {
+    transform: scaleX(1);
 }
 
 .mode-btn.active {
     background: #000000;
     color: white;
+    color: #ffffff;
 }
 
 .upload-area {
@@ -123,12 +132,14 @@ h1 {
     color: #000000;
     font-size: 1.1em;
     margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 30px;
 }
 
 .process-btn {
     background: #ffffff;
     color: black;
-    border: 3px solid #000000;
+    border: 5px solid #000000;
     padding: 15px 60px;
     border-radius: 30px;
     font-size: 1.1em;
@@ -141,7 +152,7 @@ h1 {
 
 .process-btn:hover {
     background: #f0f0f0;
-    border: 3px solid #000000;
+    border: 5px solid #000000;
 }
 
 .process-btn:disabled {
@@ -311,13 +322,52 @@ h1 {
     display: flex;           /* меняем на flex (блочный) */
     margin: 50px auto 0;     /* auto по горизонтали = центрирование */
     max-width: 300px;        /* опционально: ограничить максимум */
+    transition: 
+        background-color 2s ease,
+        box-shadow 2s ease,
+        border-color 2s ease,
+        color 2s ease;
+
 }
+
+/* ===== SMALL NOTICE TEXT ===== */
+.notice-text {
+    position: absolute;
+    bottom: 18px;
+    right: 24px;
+
+    font-size: 11px;
+    line-height: 1.4;
+    max-width: 260px;
+
+    color: rgba(0, 0, 0, 0.45); /* серо-белый */
+    text-align: right;
+
+    user-select: none;
+    pointer-events: none;
+}
+
 
 /* Родительский контейнер (рекомендуется) */
 .footer-btn-container {
     display: flex;
     justify-content: center;
     margin-top: 50px;
+}
+
+.footer-btn:hover {
+    background-color: #00ff6a;
+    border-color: #00ff6a;
+    color: #000000;
+
+    box-shadow:
+        0 0 15px rgba(0, 255, 106, 0.6),
+        0 0 40px rgba(0, 255, 106, 0.4),
+        0 0 80px rgba(0, 255, 106, 0.2);
+}
+.footer-btn:hover .footer-btn-icon {
+    filter: drop-shadow(0 0 10px rgba(0, 255, 106, 0.8));
+    transition: filter 2s ease;
 }
 
 .footer-btn-icon {

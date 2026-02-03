@@ -183,8 +183,8 @@ processBtn.addEventListener('click', async () => {
             ctx.textBaseline = 'middle';
             
 
-            ctx.fillText('@redjex', FINAL_WIDTH / 2, FRAME_HEIGHT / 2);
-            ctx.fillText('@redjex', FINAL_WIDTH / 2, FRAME_HEIGHT + IMAGE_HEIGHT + FRAME_HEIGHT / 2);
+            ctx.fillText('@bbaxttt', FINAL_WIDTH / 2, FRAME_HEIGHT / 2);
+            ctx.fillText('@bbaxttt', FINAL_WIDTH / 2, FRAME_HEIGHT + IMAGE_HEIGHT + FRAME_HEIGHT / 2);
 
             allCanvases.push(canvas);
 
