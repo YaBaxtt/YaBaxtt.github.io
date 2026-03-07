@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8 Марта | Команда BBA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <title>С 8 Марта от BBA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-pink: #ffafbd;
-            --soft-green: #2ecc71;
-            --accent-pink: #d85a7f;
+            --soft-green: #2ecc71; /* Чуть насыщеннее для контраста */
+            --accent-gold: #d4af37;
             --text-dark: #4a4a4a;
-            --glass: rgba(255, 255, 255, 0.7);
+            --branch-color: #7B5E57;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: linear-gradient(135deg, #fff5f7 0%, #f0fff4 100%);
@@ -25,165 +29,181 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
         }
 
         header {
             margin-top: 50px;
             padding: 0 20px;
-            text-align: center;
             z-index: 10;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: var(--accent-pink);
-            animation: fadeIn 1.5s ease;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #d85a7f;
+            animation: fadeInDown 1.5s ease;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            letter-spacing: 4px;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 5px;
             text-transform: uppercase;
             color: #27ae60;
-            margin-bottom: 20px;
-            animation: fadeIn 2s ease;
+            animation: fadeInUp 2s ease;
         }
 
-        /* Блок цитат вверху */
-        .top-quotes {
-            display: flex;
-            gap: 15px;
-            padding: 0 20px;
-            margin-bottom: 20px;
-            max-width: 800px;
-            animation: fadeIn 2.5s ease;
-        }
-
-        .q-mini {
-            background: var(--glass);
-            padding: 10px 15px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-style: italic;
-            border: 1px solid rgba(255,255,255,0.4);
-        }
-
-        /* Сад и Дерево */
+        /* Интерактивная зона с деревом */
         #garden {
             position: relative;
             width: 100%;
-            max-width: 1200px;
-            height: 500px;
+            height: 550px; /* Немного выше для пышной кроны */
             display: flex;
             justify-content: center;
             align-items: flex-end;
             cursor: pointer;
+            margin-top: 10px;
+            /* Чтобы wishes позиционировались относительно этого контейнера */
         }
 
         #sprout {
             position: absolute;
             bottom: 20px;
-            transition: opacity 0.5s;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            transition: transform 0.3s, opacity 0.5s;
             z-index: 10;
+        }
+
+        #sprout:hover {
+            transform: translateX(-50%) scale(1.1);
         }
 
         canvas {
             position: absolute;
             bottom: 0;
-            pointer-events: none;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Клик ловит #garden */
         }
 
-        .sway { animation: treeSway 10s infinite ease-in-out; transform-origin: bottom center; }
+        /* Анимация покачивания для уже выращенного дерева */
+        .sway-tree {
+            animation: treeSway 6s infinite ease-in-out;
+            transform-origin: bottom center;
+        }
 
-        /* Средние поздравления (новые) */
-        .mid-wish {
+        /* Пожелания - теперь они внутри #garden */
+        .wish {
             position: absolute;
-            max-width: 250px;
-            background: var(--glass);
-            padding: 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            box-shadow: 0 10px 30px rgba(216, 90, 127, 0.1);
-            border: 1px solid white;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 2s ease;
-            text-align: left;
-            z-index: 5;
-        }
-
-        .mid-wish.left { left: 10%; bottom: 40%; }
-        .mid-wish.right { right: 10%; bottom: 30%; }
-
-        .mid-wish.visible {
-            opacity: 1;
-            transform: translateY(0);
-            animation: glow 4s infinite alternate;
-        }
-
-        /* Короткие фразы на лепестках */
-        .leaf-text {
-            position: absolute;
-            background: white;
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--accent-pink);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(216, 90, 127, 0.2);
+            pointer-events: none;
             opacity: 0;
-            transform: scale(0);
+            transform: translate(-50%, -50%) scale(0);
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
+            border: 1px solid var(--primary-pink);
+            z-index: 5;
+            color: #bd365d;
         }
 
-        /* Восьмерка */
-        .eight {
+        /* Декоративная восьмерка */
+        .eight-container {
+            margin: 40px 0;
             font-family: 'Playfair Display', serif;
-            font-size: 9rem;
+            font-size: 10rem;
+            line-height: 1;
             background: linear-gradient(45deg, #ffafbd, #ffc3a0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 20px 0;
-            animation: float 4s infinite ease-in-out;
+            position: relative;
+            filter: drop-shadow(0 5px 15px rgba(255, 175, 189, 0.4));
+            animation: floating 3s infinite ease-in-out;
         }
 
-        /* Кнопка */
-        .btn {
-            margin: 40px 0 100px;
-            padding: 16px 32px;
+        /* Кнопка Telegram */
+        .tg-button {
+            display: inline-block;
+            margin-bottom: 90px;
+            padding: 18px 35px;
             background: linear-gradient(45deg, #0088cc, #24aff3);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            box-shadow: 0 8px 15px rgba(0, 136, 204, 0.2);
-            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 136, 204, 0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
+            position: relative;
         }
 
-        .btn:hover { transform: scale(1.05); }
+        .tg-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 136, 204, 0.4);
+        }
 
-        .bottom-decoration {
+        /* Колышущиеся цветы внизу */
+        .bottom-flowers {
             position: fixed;
-            bottom: 0;
+            bottom: -10px;
             width: 100%;
-            height: 60px;
+            height: 80px;
             display: flex;
             justify-content: space-around;
             pointer-events: none;
+            z-index: 1;
         }
 
-        @keyframes treeSway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1deg); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes glow { from { box-shadow: 0 0 10px rgba(255,255,255,0.5); } to { box-shadow: 0 0 20px rgba(216, 90, 127, 0.2); } }
+        .flower-icon {
+            font-size: 1.8rem;
+            animation: sway 4s infinite ease-in-out;
+            opacity: 0.7;
+        }
 
-        @media (max-width: 800px) {
-            .mid-wish { position: relative; left: auto !important; right: auto !important; bottom: auto !important; margin: 10px 20px; max-width: 90%; }
-            #garden { height: 400px; }
+        /* Анимации */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-8deg) translateY(0); }
+            50% { transform: rotate(8deg) translateY(-8px); }
+        }
+
+        @keyframes treeSway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-1deg); }
+            75% { transform: rotate(1deg); }
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
             h1 { font-size: 1.6rem; }
+            .subtitle { font-size: 1.1rem; letter-spacing: 3px; }
+            .eight-container { font-size: 7rem; margin: 20px 0; }
+            #garden { height: 450px; }
+            .wish { font-size: 0.75rem; padding: 5px 10px; }
         }
     </style>
 </head>
@@ -192,36 +212,26 @@
     <header>
         <h1>Поздравление от всей команды BBA</h1>
         <div class="subtitle">С 8 Марта!</div>
-        <div class="top-quotes">
-            <div class="q-mini">«Весна — это время красоты и вдохновения...»</div>
-            <div class="q-mini">«Пусть каждый миг будет наполнен теплом...»</div>
-        </div>
     </header>
 
     <div id="garden">
         <div id="sprout">
-            <svg width="80" height="80" viewBox="0 0 100 100">
-                <path d="M50 95 Q50 50 50 25" stroke="#4CAF50" stroke-width="5" fill="none" />
+            <svg viewBox="0 0 100 100">
+                <path d="M50 95 Q50 50 50 25" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M50 70 Q75 60 85 40" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <path d="M50 80 Q25 70 15 50" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round"/>
                 <circle cx="50" cy="25" r="10" fill="#FFB6C1" />
             </svg>
-            <p style="text-align:center; color:#27ae60; font-size:0.7rem; font-weight:bold;">Нажми на меня</p>
+            <p style="font-size: 0.8rem; color: #27ae60; font-weight: bold; margin-top: -10px;">Нажми</p>
         </div>
-        
-        <div class="mid-wish left" id="wishL">
-            Поздравляем с 8 Марта! Пусть эта весна принесёт вам радость, вдохновение, тёплые моменты и много счастливых улыбок каждый день.
-        </div>
-        <div class="mid-wish right" id="wishR">
-            Пусть каждый день будет наполнен светом, теплом и хорошим настроением. Желаем яркой весны, красивых мечт и настоящего счастья.
-        </div>
-        
         <canvas id="treeCanvas"></canvas>
     </div>
 
-    <div class="eight">8</div>
+    <div class="eight-container">8</div>
 
-    <a href="https://t.me/+ILiWQ7_NxxNlM2Uy" class="btn" target="_blank">Перейти в Telegram канал BBA</a>
+    <a href="https://t.me/BBASHOP" class="tg-button" target="_blank">Перейти в Telegram канал BBA</a>
 
-    <div class="bottom-decoration" id="flowers"></div>
+    <div class="bottom-flowers" id="flowerBed"></div>
 
     <script>
         const canvas = document.getElementById('treeCanvas');
@@ -229,16 +239,44 @@
         const garden = document.getElementById('garden');
         const sprout = document.getElementById('sprout');
         
-        let wishes = ["Будь счастлива", "Улыбайся чаще", "Весеннего счастья", "Тепла и радости", "Счастья и улыбок", "Прекрасной весны", "Радости каждый день", "Яркого настроения" , "Лучи радости", "Счастья и улыбок", "Ярких эмоций", "Свети всегда"];
-        let grown = false;
-        let branchTips = [];
+        // Массив пожеланий
+        let wishesData = [
+            "Будь счастлива", "Улыбайся чаще", "Весеннего счастья", 
+            "Тепла и радости", "Счастья и улыбок", "Прекрасной весны", 
+            "Радости каждый день", "Яркого настроения"
+        ];
+        
+        // Перемешиваем массив, чтобы порядок был случайным
+        wishesData = wishesData.sort(() => Math.random() - 0.5);
 
-        function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = 500;
+        let grown = false;
+        // Коэффициент масштабирования для координат canvas -> DOM
+        let scaleFactor = 1; 
+
+        function initCanvas() {
+            // Берем размеры контейнера
+            const containerRect = garden.getBoundingClientRect();
+            canvas.width = containerRect.width;
+            canvas.height = containerRect.height;
+            
+            // Если дерево уже выращено, перерисовываем его при ресайзе
+            if (grown) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Для простоты при ресайзе просто сбрасываем состояние
+                // В идеале нужно хранить структуру дерева, но это усложнит код
+                sprout.style.display = 'block';
+                sprout.style.opacity = '1';
+                grown = false;
+                document.querySelectorAll('.wish').forEach(w => w.remove());
+                canvas.classList.remove('sway-tree');
+            }
         }
-        window.addEventListener('resize', init);
-        init();
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+
+        // Массив для хранения координат кончиков веток
+        let branchTips = [];
 
         function drawTree(startX, startY, len, angle, branchWidth, depth) {
             ctx.beginPath();
@@ -252,59 +290,122 @@
             ctx.lineTo(0, -len);
             ctx.stroke();
 
+            // Рекурсивный выход
             if (depth > 0) {
-                drawTree(0, -len, len * (0.7 + Math.random() * 0.1), angle - (15 + Math.random() * 15), branchWidth * 0.7, depth - 1);
-                drawTree(0, -len, len * (0.7 + Math.random() * 0.1), angle + (15 + Math.random() * 15), branchWidth * 0.7, depth - 1);
+                // Случайные коэффициенты для естественности
+                const randomAngle = 10 + Math.random() * 15;
+                const randomLen = 0.7 + Math.random() * 0.15;
+
+                drawTree(0, -len, len * randomLen, angle - randomAngle, branchWidth * 0.7, depth - 1);
+                drawTree(0, -len, len * randomLen, angle + randomAngle, branchWidth * 0.7, depth - 1);
             } else {
-                const m = ctx.getTransform();
-                branchTips.push({ x: m.a * 0 + m.c * (-len) + m.e, y: m.b * 0 + m.d * (-len) + m.f });
+                // Мы на кончике ветки, сохраняем абсолютные координаты
+                // Используем ctx.getTransform() для получения текущей матрицы преобразований
+                const matrix = ctx.getTransform();
+                // Координата конца текущей ветки (0, -len) в локальных координатах
+                const tipX = matrix.a * 0 + matrix.c * (-len) + matrix.e;
+                const tipY = matrix.b * 0 + matrix.d * (-len) + matrix.f;
+                
+                branchTips.push({ x: tipX, y: tipY });
+
+                // Рисуем цветок
                 ctx.beginPath();
-                ctx.arc(0, -len, 5, 0, Math.PI * 2);
-                ctx.fillStyle = "#ffafbd";
+                ctx.arc(0, -len, 4 + Math.random() * 2, 0, Math.PI * 2);
+                ctx.fillStyle = Math.random() > 0.4 ? "#ffafbd" : "#ffc3a0";
                 ctx.fill();
             }
+
             ctx.restore();
+        }
+
+        function placeWishes() {
+            if (wishesData.length === 0 || branchTips.length === 0) return;
+
+            // Выбираем случайные кончики веток для текста (но не слишком близко друг к другу)
+            const sortedTips = branchTips.sort(() => Math.random() - 0.5);
+            const selectedTips = [];
+            const minDistance = 50; // Минимальное расстояние между фразами
+
+            for (let tip of sortedTips) {
+                let tooClose = false;
+                for (let selected of selectedTips) {
+                    const dist = Math.hypot(tip.x - selected.x, tip.y - selected.y);
+                    if (dist < minDistance) {
+                        tooClose = true;
+                        break;
+                    }
+                }
+                if (!tooClose) {
+                    selectedTips.push(tip);
+                    if (selectedTips.length === wishesData.length) break;
+                }
+            }
+
+            // Создаем DOM элементы для пожеланий
+            selectedTips.forEach((tip, index) => {
+                if (index >= wishesData.length) return;
+
+                const label = document.createElement('div');
+                label.className = 'wish';
+                label.innerText = wishesData[index];
+                
+                // Позиционируем абсолютно внутри #garden
+                label.style.left = `${tip.x}px`;
+                label.style.top = `${tip.y}px`;
+                
+                garden.appendChild(label);
+                
+                // Анимация появления с задержкой
+                setTimeout(() => {
+                    label.style.opacity = '1';
+                    label.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 100 + index * 150);
+            });
         }
 
         garden.addEventListener('click', () => {
             if (grown) return;
             grown = true;
-            sprout.style.opacity = '0';
+            branchTips = []; // Сброс координат
             
-            let curLen = 0;
-            function anim() {
-                if (curLen < 100) {
+            // Скрываем росток
+            sprout.style.opacity = '0';
+            setTimeout(() => sprout.style.display = 'none', 500);
+            
+            let currentLen = 0;
+            // Базовая длина ствола зависит от высоты экрана
+            const targetLen = canvas.height * 0.22;
+            const depth = window.innerWidth < 600 ? 5 : 6; // Глубина рекурсии
+            
+            function animate() {
+                if (currentLen < targetLen) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    drawTree(canvas.width / 2, canvas.height - 10, curLen, 0, 10, 6);
-                    curLen += 2;
-                    requestAnimationFrame(anim);
+                    // Отрисовываем ствол и запускаем рекурсию
+                    drawTree(canvas.width / 2, canvas.height - 20, currentLen, 0, 12, depth);
+                    currentLen += 3; // Скорость роста
+                    requestAnimationFrame(animate);
                 } else {
-                    canvas.classList.add('sway');
-                    // Показываем короткие фразы
-                    branchTips.sort(() => Math.random() - 0.5).slice(0, wishes.length).forEach((tip, i) => {
-                        const el = document.createElement('div');
-                        el.className = 'leaf-text';
-                        el.innerText = wishes[i];
-                        el.style.left = tip.x + 'px';
-                        el.style.top = tip.y + 'px';
-                        garden.appendChild(el);
-                        setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translate(-50%, -50%) scale(1)'; }, i * 150);
-                    });
-                    // Показываем средние поздравления
-                    document.getElementById('wishL').classList.add('visible');
-                    setTimeout(() => document.getElementById('wishR').classList.add('visible'), 800);
+                    // Рост завершен, размещаем текст
+                    placeWishes();
+                    // Добавляем легкое покачивание всему canvas
+                    canvas.classList.add('sway-tree');
                 }
             }
-            anim();
+            animate();
         });
 
-        const fContainer = document.getElementById('flowers');
-        const icons = ['🌸', '🌷', '🌹', '🌺', '🌼'];
-        for (let i = 0; i < 15; i++) {
+        // Создание колышущихся цветов внизу
+        const flowerBed = document.getElementById('flowerBed');
+        const flowerIcons = ['🌸', '🌷', '🌹', '🌺', '🌼'];
+        const numFlowers = window.innerWidth < 600 ? 10 : 18;
+        
+        for (let i = 0; i < numFlowers; i++) {
             const f = document.createElement('div');
-            f.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-            f.style.cssText = `animation: float ${3+Math.random()*2}s infinite; opacity: 0.6; font-size: 1.5rem;`;
-            fContainer.appendChild(f);
+            f.className = 'flower-icon';
+            f.innerText = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+            f.style.animationDelay = `${Math.random() * 3}s`;
+            f.style.fontSize = `${1.2 + Math.random() * 1}rem`;
+            flowerBed.appendChild(f);
         }
     </script>
 </body>
