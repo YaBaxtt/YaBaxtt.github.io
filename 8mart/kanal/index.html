@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>С 8 Марта от BBA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-pink: #ffafbd;
-            --soft-green: #2ecc71; /* Чуть насыщеннее для контраста */
+            --soft-green: #2ecc71;
             --accent-gold: #d4af37;
             --text-dark: #4a4a4a;
             --branch-color: #7B5E57;
@@ -30,6 +33,17 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+        }
+
+        /* Слой для падающих лепестков */
+        #petalCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
         }
 
         header {
@@ -55,17 +69,16 @@
             animation: fadeInUp 2s ease;
         }
 
-        /* Интерактивная зона с деревом */
         #garden {
             position: relative;
             width: 100%;
-            height: 550px; /* Немного выше для пышной кроны */
+            height: 550px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
             cursor: pointer;
             margin-top: 10px;
-            /* Чтобы wishes позиционировались относительно этого контейнера */
+            z-index: 5;
         }
 
         #sprout {
@@ -83,22 +96,20 @@
             transform: translateX(-50%) scale(1.1);
         }
 
-        canvas {
+        #treeCanvas {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Клик ловит #garden */
+            pointer-events: none;
         }
 
-        /* Анимация покачивания для уже выращенного дерева */
         .sway-tree {
             animation: treeSway 6s infinite ease-in-out;
             transform-origin: bottom center;
         }
 
-        /* Пожелания - теперь они внутри #garden */
         .wish {
             position: absolute;
             background: rgba(255, 255, 255, 0.9);
@@ -117,9 +128,29 @@
             color: #bd365d;
         }
 
-        /* Декоративная восьмерка */
+        /* Стили для цитат под деревом */
+        .quotes-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        .quote-card {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #8e44ad;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-pink);
+            animation: fadeInUp 2.5s ease;
+        }
+
         .eight-container {
-            margin: 40px 0;
+            margin: 20px 0;
             font-family: 'Playfair Display', serif;
             font-size: 10rem;
             line-height: 1;
@@ -131,7 +162,6 @@
             animation: floating 3s infinite ease-in-out;
         }
 
-        /* Кнопка Telegram */
         .tg-button {
             display: inline-block;
             margin-bottom: 90px;
@@ -152,7 +182,6 @@
             box-shadow: 0 15px 25px rgba(0, 136, 204, 0.4);
         }
 
-        /* Колышущиеся цветы внизу */
         .bottom-flowers {
             position: fixed;
             bottom: -10px;
@@ -170,44 +199,104 @@
             opacity: 0.7;
         }
 
-        /* Анимации */
         @keyframes sway {
-            0%, 100% { transform: rotate(-8deg) translateY(0); }
-            50% { transform: rotate(8deg) translateY(-8px); }
+
+            0%,
+            100% {
+                transform: rotate(-8deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(8deg) translateY(-8px);
+            }
         }
 
         @keyframes treeSway {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-1deg); }
-            75% { transform: rotate(1deg); }
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-1deg);
+            }
+
+            75% {
+                transform: rotate(1deg);
+            }
         }
 
         @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Mobile Responsive */
         @media (max-width: 600px) {
-            h1 { font-size: 1.6rem; }
-            .subtitle { font-size: 1.1rem; letter-spacing: 3px; }
-            .eight-container { font-size: 7rem; margin: 20px 0; }
-            #garden { height: 450px; }
-            .wish { font-size: 0.75rem; padding: 5px 10px; }
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+                letter-spacing: 3px;
+            }
+
+            .eight-container {
+                font-size: 7rem;
+                margin: 20px 0;
+            }
+
+            #garden {
+                height: 450px;
+            }
+
+            .wish {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+
+            .quote-card {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
+
 <body>
+
+    <canvas id="petalCanvas"></canvas>
 
     <header>
         <h1>Поздравление от всей команды BBA</h1>
@@ -217,9 +306,9 @@
     <div id="garden">
         <div id="sprout">
             <svg viewBox="0 0 100 100">
-                <path d="M50 95 Q50 50 50 25" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round"/>
-                <path d="M50 70 Q75 60 85 40" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round"/>
-                <path d="M50 80 Q25 70 15 50" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <path d="M50 95 Q50 50 50 25" stroke="#4CAF50" stroke-width="5" fill="none" stroke-linecap="round" />
+                <path d="M50 70 Q75 60 85 40" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M50 80 Q25 70 15 50" stroke="#4CAF50" stroke-width="4" fill="none" stroke-linecap="round" />
                 <circle cx="50" cy="25" r="10" fill="#FFB6C1" />
             </svg>
             <p style="font-size: 0.8rem; color: #27ae60; font-weight: bold; margin-top: -10px;">Нажми</p>
@@ -227,43 +316,45 @@
         <canvas id="treeCanvas"></canvas>
     </div>
 
+    <div class="quotes-container">
+        <div class="quote-card">
+            "Пусть ваша жизнь будет наполнена ароматом весенних цветов и теплом искренних улыбок. Вы — наше главное
+            вдохновение!"
+        </div>
+        <div class="quote-card">
+            "Команда BBA желает вам расцветать с каждым днем, подобно прекрасному весеннему саду. Сияйте и будьте
+            счастливы!"
+        </div>
+    </div>
+
     <div class="eight-container">8</div>
 
-    <a href="https://t.me/BBASHOP" class="tg-button" target="_blank">Перейти в Telegram канал BBA</a>
+    <a href="https://t.me/+ILiWQ7_NxxNlM2Uy" class="tg-button" target="_blank">Перейти в Telegram канал BBA Shop</a>
 
     <div class="bottom-flowers" id="flowerBed"></div>
 
     <script>
+        // ЛОГИКА ДЕРЕВА (ОРИГИНАЛЬНАЯ)
         const canvas = document.getElementById('treeCanvas');
         const ctx = canvas.getContext('2d');
         const garden = document.getElementById('garden');
         const sprout = document.getElementById('sprout');
-        
-        // Массив пожеланий
+
         let wishesData = [
-            "Будь счастлива", "Улыбайся чаще", "Весеннего счастья", 
-            "Тепла и радости", "Счастья и улыбок", "Прекрасной весны", 
+            "Будь счастлива", "Улыбайся чаще", "Весеннего счастья",
+            "Тепла и радости", "Счастья и улыбок", "Прекрасной весны",
             "Радости каждый день", "Яркого настроения"
         ];
-        
-        // Перемешиваем массив, чтобы порядок был случайным
-        wishesData = wishesData.sort(() => Math.random() - 0.5);
 
+        wishesData = wishesData.sort(() => Math.random() - 0.5);
         let grown = false;
-        // Коэффициент масштабирования для координат canvas -> DOM
-        let scaleFactor = 1; 
 
         function initCanvas() {
-            // Берем размеры контейнера
             const containerRect = garden.getBoundingClientRect();
             canvas.width = containerRect.width;
             canvas.height = containerRect.height;
-            
-            // Если дерево уже выращено, перерисовываем его при ресайзе
             if (grown) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // Для простоты при ресайзе просто сбрасываем состояние
-                // В идеале нужно хранить структуру дерева, но это усложнит код
                 sprout.style.display = 'block';
                 sprout.style.opacity = '1';
                 grown = false;
@@ -275,7 +366,6 @@
         window.addEventListener('resize', initCanvas);
         initCanvas();
 
-        // Массив для хранения координат кончиков веток
         let branchTips = [];
 
         function drawTree(startX, startY, len, angle, branchWidth, depth) {
@@ -290,72 +380,47 @@
             ctx.lineTo(0, -len);
             ctx.stroke();
 
-            // Рекурсивный выход
             if (depth > 0) {
-                // Случайные коэффициенты для естественности
                 const randomAngle = 10 + Math.random() * 15;
                 const randomLen = 0.7 + Math.random() * 0.15;
-
                 drawTree(0, -len, len * randomLen, angle - randomAngle, branchWidth * 0.7, depth - 1);
                 drawTree(0, -len, len * randomLen, angle + randomAngle, branchWidth * 0.7, depth - 1);
             } else {
-                // Мы на кончике ветки, сохраняем абсолютные координаты
-                // Используем ctx.getTransform() для получения текущей матрицы преобразований
                 const matrix = ctx.getTransform();
-                // Координата конца текущей ветки (0, -len) в локальных координатах
                 const tipX = matrix.a * 0 + matrix.c * (-len) + matrix.e;
                 const tipY = matrix.b * 0 + matrix.d * (-len) + matrix.f;
-                
                 branchTips.push({ x: tipX, y: tipY });
-
-                // Рисуем цветок
                 ctx.beginPath();
                 ctx.arc(0, -len, 4 + Math.random() * 2, 0, Math.PI * 2);
                 ctx.fillStyle = Math.random() > 0.4 ? "#ffafbd" : "#ffc3a0";
                 ctx.fill();
             }
-
             ctx.restore();
         }
 
         function placeWishes() {
             if (wishesData.length === 0 || branchTips.length === 0) return;
-
-            // Выбираем случайные кончики веток для текста (но не слишком близко друг к другу)
             const sortedTips = branchTips.sort(() => Math.random() - 0.5);
             const selectedTips = [];
-            const minDistance = 50; // Минимальное расстояние между фразами
-
+            const minDistance = 50;
             for (let tip of sortedTips) {
                 let tooClose = false;
                 for (let selected of selectedTips) {
                     const dist = Math.hypot(tip.x - selected.x, tip.y - selected.y);
-                    if (dist < minDistance) {
-                        tooClose = true;
-                        break;
-                    }
+                    if (dist < minDistance) { tooClose = true; break; }
                 }
                 if (!tooClose) {
                     selectedTips.push(tip);
                     if (selectedTips.length === wishesData.length) break;
                 }
             }
-
-            // Создаем DOM элементы для пожеланий
             selectedTips.forEach((tip, index) => {
-                if (index >= wishesData.length) return;
-
                 const label = document.createElement('div');
                 label.className = 'wish';
                 label.innerText = wishesData[index];
-                
-                // Позиционируем абсолютно внутри #garden
                 label.style.left = `${tip.x}px`;
                 label.style.top = `${tip.y}px`;
-                
                 garden.appendChild(label);
-                
-                // Анимация появления с задержкой
                 setTimeout(() => {
                     label.style.opacity = '1';
                     label.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -366,39 +431,30 @@
         garden.addEventListener('click', () => {
             if (grown) return;
             grown = true;
-            branchTips = []; // Сброс координат
-            
-            // Скрываем росток
+            branchTips = [];
             sprout.style.opacity = '0';
             setTimeout(() => sprout.style.display = 'none', 500);
-            
             let currentLen = 0;
-            // Базовая длина ствола зависит от высоты экрана
             const targetLen = canvas.height * 0.22;
-            const depth = window.innerWidth < 600 ? 5 : 6; // Глубина рекурсии
-            
+            const depth = window.innerWidth < 600 ? 5 : 6;
             function animate() {
                 if (currentLen < targetLen) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    // Отрисовываем ствол и запускаем рекурсию
                     drawTree(canvas.width / 2, canvas.height - 20, currentLen, 0, 12, depth);
-                    currentLen += 3; // Скорость роста
+                    currentLen += 3;
                     requestAnimationFrame(animate);
                 } else {
-                    // Рост завершен, размещаем текст
                     placeWishes();
-                    // Добавляем легкое покачивание всему canvas
                     canvas.classList.add('sway-tree');
                 }
             }
             animate();
         });
 
-        // Создание колышущихся цветов внизу
+        // ЦВЕТЫ ВНИЗУ
         const flowerBed = document.getElementById('flowerBed');
         const flowerIcons = ['🌸', '🌷', '🌹', '🌺', '🌼'];
         const numFlowers = window.innerWidth < 600 ? 10 : 18;
-        
         for (let i = 0; i < numFlowers; i++) {
             const f = document.createElement('div');
             f.className = 'flower-icon';
@@ -407,6 +463,62 @@
             f.style.fontSize = `${1.2 + Math.random() * 1}rem`;
             flowerBed.appendChild(f);
         }
+
+        // ЛОГИКА ПАДАЮЩИХ ЛЕПЕСТКОВ (НОВОЕ)
+        const pCanvas = document.getElementById('petalCanvas');
+        const pCtx = pCanvas.getContext('2d');
+        let petals = [];
+
+        function initPetals() {
+            pCanvas.width = window.innerWidth;
+            pCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', initPetals);
+        initPetals();
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height - pCanvas.height;
+                this.size = Math.random() * 5 + 5;
+                this.speed = Math.random() * 1 + 1;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = Math.random() * 0.02 - 0.01;
+                this.color = Math.random() > 0.5 ? "#ffafbd" : "#ffc3a0";
+            }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.angle) * 0.5;
+                this.angle += this.spin;
+                if (this.y > pCanvas.height) {
+                    this.y = -10;
+                    this.x = Math.random() * pCanvas.width;
+                }
+            }
+            draw() {
+                pCtx.save();
+                pCtx.translate(this.x, this.y);
+                pCtx.rotate(this.angle);
+                pCtx.beginPath();
+                pCtx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                pCtx.fillStyle = this.color;
+                pCtx.fill();
+                pCtx.restore();
+            }
+        }
+
+        for (let i = 0; i < 30; i++) petals.push(new Petal());
+
+        function animatePetals() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            petals.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
     </script>
 </body>
+
 </html>
