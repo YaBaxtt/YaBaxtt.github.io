@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at center, #0d0d0d, #1a001a);
+  color: #d9b3ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game-container {
+  text-align: center;
+  background: rgba(30, 0, 30, 0.6);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px #8000ff;
+  width: 350px;
+}
+
+.title {
+  font-size: 2.5em;
+  color: #b84dff;
+  text-shadow: 0 0 15px #8000ff;
+}
+
+.score, .timer, .level {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+#startBtn {
+  background: #8000ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#startBtn:hover {
+  background: #b84dff;
+  box-shadow: 0 0 15px #b84dff;
+}
+
+#gameArea {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  margin: 20px auto;
+  border: 2px solid #8000ff;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.6);
+}
+
+.circle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #b84dff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #b84dff;
+  cursor: pointer;
+  animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; transform: scale(0.5); }
+}
+
+#records {
+  list-style: none;
+  padding: 0;
+  color: #d9b3ff;
+}
+#records li {
+  margin: 5px 0;
+  background: rgba(128,0,255,0.2);
+  padding: 5px;
+  border-radius: 8px;
+}
