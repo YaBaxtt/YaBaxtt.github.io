@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Arena</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <section id="menu" class="screen active">
+            <h1 class="title"><b>SKILL ARENA</b></h1>
+            <div class="rules-hint">
+                🎯 <b>Aim:</b> Кликай по зеленым. Золотые — бонус. Избегай красных.<br>
+                ⚡ <b>Pulse:</b> Жми в центр, когда кольцо совпадет с кругом.<br>
+                🧠 <b>Sequence:</b> Запомни числа и нажми их по порядку.
+            </div>
+            <div class="game-grid">
+                <div class="game-card" onclick="game.start('aim')"><span>🎯</span>Aim</div>
+                <div class="game-card" onclick="game.start('pulse')"><span>⚡</span>Pulse</div>
+                <div class="game-card" onclick="game.start('sequence')"><span>🧠</span>Sequence</div>
+            </div>
+            <button class="btn-main" onclick="ui.modal('s-modal')">SETTINGS</button>
+
+            <div class="theme-switches">
+                <div class="t-dot t-dark" onclick="ui.setTheme('dark')"></div>
+                <div class="t-dot t-white" onclick="ui.setTheme('white')"></div>
+                <div class="t-dot t-blue" onclick="ui.setTheme('blue')"></div>
+            </div>
+        </section>
+
+        <section id="game-view" class="screen">
+            <div class="hud" id="hud">
+                <div id="score">0</div>
+                <div id="combo">x1</div>
+                <div id="timer">0s</div>
+            </div>
+            <div id="stage"></div>
+        </section>
+
+        <section id="result" class="screen">
+            <h1 class="title"><b>DONE</b></h1>
+            <h2 id="final-score" style="font-size: 80px; margin-bottom: 40px">0</h2>
+            <button class="btn-main" onclick="location.reload()">MENU</button>
+        </section>
+
+        <div id="s-modal" class="modal">
+            <div class="modal-content">
+                <h2 style="margin-bottom: 25px">Settings</h2>
+                <div class="setting-group">
+                    <label>Target Size</label>
+                    <div class="btn-row">
+                        <button onclick="ui.set('size', 80, this)">Big</button>
+                        <button class="selected" onclick="ui.set('size', 55, this)">Mid</button>
+                        <button onclick="ui.set('size', 35, this)">Small</button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>Aim Duration</label>
+                    <div class="btn-row">
+                        <button class="selected" onclick="ui.set('aimTime', 15, this)">15s</button>
+                        <button onclick="ui.set('aimTime', 30, this)">30s</button>
+                    </div>
+                </div>
+                <button class="btn-main" style="width: 100%; max-width: none" onclick="ui.modal('s-modal')">SAVE</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
