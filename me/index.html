@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAXT | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <audio id="main-audio"></audio>
+    <div id="loader"><span>SYSTEM LOADING...</span></div>
+
+    <canvas id="canvas"></canvas>
+
+    <nav>
+        <div class="logo">bbaxttt<span>_</span></div>
+        <div class="nav-right">
+            <a href="https://t.me/bbaxttt" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://github.com/YaBaxtt" target="_blank"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero reveal">
+            <div class="tag">#WHO_AM_I</div>
+            <h1>Просто бэк-енд программист </h1>
+            <p>
+                Мне ## лет. Уже год я глубоко копаю в Python.
+                Специализируюсь на асинхронности и базах данных.
+                Не строю из себя «архитектора», я просто пишу код, который работает )
+            </p>
+        </section>
+
+        <section class="projects">
+            <div class="tag">#PROJECTS</div>
+            <div class="project-card status-soon reveal">
+                <div class="card-content">
+                    <div class="badge">IN DEVELOPMENT</div>
+                    <h3>News.site</h3>
+                    <p>Крупный новостной портал в стиле BBC News. Мощная админка на Django, сложная структура категорий
+                        и фильтрации.</p>
+                    <div class="tech">#Django #Python </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section reveal">
+            <div class="tag">#SKILLS</div>
+            <h2 class="section-title">Технологический стек > </h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fa-brands fa-python"></i>
+                    <span>Python</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-solid fa-server"></i>
+                    <span>Django</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-solid fa-database"></i>
+                    <span>PostgreSQL</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-brands fa-html5"></i>
+                    <span>HTML / CSS</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-brands fa-git-alt"></i>
+                    <span>Git</span>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>Aiogram</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal" style="padding: 60px 20px; color: white; font-family: sans-serif;">
+            <div style="color: #38bdf8; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px;">#MUSIC</div>
+
+            <div style="width: 100%; overflow: hidden; position: relative;">
+                <div id="music-track"
+                    style="display: flex; gap: 20px; transition: transform 0.5s ease; will-change: transform;">
+
+                    <div class="m-card active"
+                        style="min-width: 300px; background: #0f172a; border: 1px solid #d4ff00; border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px;">
+                        <div
+                            style="width: 70px; height: 70px; background: #1e293b; border-radius: 12px; overflow: hidden; flex-shrink: 0;">
+                            <img src="https://avatars.mds.yandex.net/get-entity_search/4731417/1233130658/S600xU"
+                                style="width: 100%; height: 100%; object-fit: cover;"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <h3 style="margin: 0; font-size: 1rem;">Friends </h3>
+                            <p style="margin: 5px 0 0; font-size: 0.8rem; color: #94a3b8;">Chase Atlantic</p>
+                        </div>
+                        <button onclick="playMusic('music1.mp3', this)"
+                            style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #d4ff00; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-play" style="color: black;"></i>
+                        </button>
+                    </div>
+
+                    <div class="m-card"
+                        style="min-width: 300px; background: #0f172a; border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px;">
+                        <div
+                            style="width: 70px; height: 70px; background: #1e293b; border-radius: 12px; overflow: hidden; flex-shrink: 0;">
+                            <img src="https://avatars.mds.yandex.net/i?id=7676943623c95173e24e9be95db4579f18a9bf3c-5301046-images-thumbs&n=13"
+                                style="width: 100%; height: 100%; object-fit: cover;"
+                                onerror="this.style.display='none'">
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <h3 style="margin: 0; font-size: 1rem;">Paper Solidier</h3>
+                            <p style="margin: 5px 0 0; font-size: 0.8rem; color: #94a3b8;"> Brent Faiyaz & Joony </p>
+                        </div>
+                        <button onclick="playMusic('music2.mp3', this)"
+                            style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #c5f100; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-play" style="color: black;"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 25px;">
+                <div onclick="moveSlider(0)" class="m-dot"
+                    style="width: 20px; height: 8px; background: #c2f507; border-radius: 10px; cursor: pointer;"></div>
+                <div onclick="moveSlider(1)" class="m-dot"
+                    style="width: 8px; height: 8px; background: #334155; border-radius: 50%; cursor: pointer;"></div>
+            </div>
+        </section>
+
+        <script>
+            const track = document.getElementById('music-track');
+            const dots = document.querySelectorAll('.m-dot');
+
+            function moveSlider(index) {
+                track.style.transform = `translateX(-${index * 320}px)`;
+                dots.forEach((d, i) => {
+                    d.style.width = i === index ? '20px' : '8px';
+                    d.style.borderRadius = i === index ? '10px' : '50%';
+                    d.style.background = i === index ? '#d4ff00' : '#334155';
+                });
+            }
+
+            let currentAudio = new Audio();
+            function playMusic(src, btn) {
+                if (currentAudio.src.includes(src) && !currentAudio.paused) {
+                    currentAudio.pause();
+                    btn.innerHTML = '<i class="fa-solid fa-play" style="color: black;"></i>';
+                } else {
+                    currentAudio.src = src;
+                    currentAudio.play();
+                    btn.innerHTML = '<i class="fa-solid fa-pause" style="color: black;"></i>';
+                }
+            }
+        </script>
+
+        <audio id="main-audio"></audio>
+
+        <section class="contact-section reveal">
+            <div class="tag">#CONTACT</div>
+            <h2>Есть идея?</h2>
+            <p>Давай обсудим. Я всегда готов для сложных задач.</p>
+            <div class="contact-links">
+                <a href="mailto:твой_email@mail.com" class="c-link">GitHub</a>
+                <a href="https://t.me/bbaxttt" class="c-link">Telegram</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
