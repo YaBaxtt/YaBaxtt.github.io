@@ -1,0 +1,727 @@
+/* style.css */
+
+/* Custom Properties for Global Design Tokens */
+:root {
+    --bg-main: #0a0a0a;
+    --bg-card: #111111;
+    --text-primary: #ffffff;
+    --text-muted: #888888;
+    
+    /* Highlight Colors for Critical Data visibility */
+    --accent-important: #ffb74d; 
+    --accent-notice: #64b5f6;
+    --accent-glow: rgba(255, 183, 77, 0.15);
+
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    
+    --radius-large: 24px;
+    --radius-medium: 16px;
+    
+    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.25s ease;
+}
+
+/* Reset & Global Settings */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Background Atmospheric Lights and Geometry */
+.bg-blur-light {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.015) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bg-blur-light.top-left {
+    top: -200px;
+    left: -200px;
+}
+
+.bg-blur-light.bottom-right {
+    bottom: 200px;
+    right: -200px;
+}
+
+.bg-giant-airplane {
+    position: fixed;
+    bottom: -100px;
+    left: -150px;
+    width: 700px;
+    height: 700px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+    transform: rotate(15deg);
+}
+
+/* Native CSS Intro Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-fade-in { animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-up { opacity: 0; animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-scale-up { opacity: 0; animation: scaleUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Header & Interactive Status Badge */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-left: 2px;
+}
+
+.status-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.status-badge {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    user-select: none;
+}
+
+.status-badge:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.status-tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #161616;
+    border: 1px solid var(--glass-border);
+    padding: 12px 18px;
+    border-radius: var(--radius-medium);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition-fast);
+    z-index: 1010;
+}
+
+.status-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Main Content Containers */
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 56px;
+    text-align: center;
+}
+
+/* Hero Frame Architecture */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 140px;
+    padding-bottom: 80px;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #a5a5a5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: -0.5px;
+    margin-bottom: 48px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Buttons System */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 36px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius-medium);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #ffffff;
+    color: #000000;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(255, 255, 255, 0.08);
+}
+
+.btn-secondary {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+.hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    border-radius: var(--radius-large);
+    overflow: hidden;
+}
+
+.hero-image-glow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(10,10,10,0.4));
+    z-index: 2;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: var(--transition-smooth);
+}
+
+.hero-image-wrapper:hover .hero-img {
+    transform: scale(1.02);
+    filter: brightness(0.95);
+}
+
+/* Grids Setup & Shared Card Layouts */
+.advantages-section, .info-section, .delivery-section, .steps-section, .search-cta-section {
+    padding: 120px 0;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.advantage-card, .info-card, .delivery-card, .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-large);
+    padding: 44px;
+    position: relative;
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.advantage-card:hover, .info-card:hover, .delivery-card:hover, .step-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+}
+
+/* Custom Highlight Card Styling for Crucial Business Metrics */
+.highlight-card {
+    border: 1px solid rgba(255, 183, 77, 0.15);
+    background: linear-gradient(180deg, #12110f 0%, #111111 100%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.highlight-card:hover {
+    border-color: rgba(255, 183, 77, 0.35);
+    box-shadow: 0 24px 50px rgba(255, 183, 77, 0.04);
+}
+
+.highlight-text {
+    color: var(--accent-important);
+}
+
+.text-glow {
+    text-shadow: 0 0 15px rgba(255,183,77,0.4);
+}
+
+.card-icon {
+    font-size: 2.25rem;
+    margin-bottom: 24px;
+}
+
+.advantage-card h3, .info-card h3, .delivery-card h3, .step-card h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+}
+
+.advantage-card p, .step-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Order Rules Components Layout */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.info-icon {
+    font-size: 1.5rem;
+    width: 52px;
+    height: 52px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Custom Package / Flight Vector Animation Elements */
+.package-animated {
+    color: var(--accent-notice);
+    border-color: rgba(100, 181, 246, 0.2);
+}
+
+.plane-icon {
+    width: 24px;
+    height: 24px;
+    animation: flightFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes flightFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+/* Typography Custom Highlighting System */
+.info-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.info-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.info-list.standard-list li span {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Distinct visual markers for immediate customer communication */
+.info-list li.important-accent {
+    color: var(--accent-important);
+    font-weight: 600;
+}
+
+.info-list li.important-accent::before {
+    content: "✦";
+    color: var(--accent-important);
+}
+
+.info-list li.notice-accent {
+    color: var(--accent-notice);
+    font-weight: 500;
+}
+
+.info-list li.notice-accent::before {
+    content: "ℹ";
+    color: var(--accent-notice);
+}
+
+/* Delivery Logistical Section Elements */
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.delivery-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.delivery-card-icon {
+    font-size: 1.5rem;
+}
+
+.delivery-methods {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.method-tag {
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.delivery-card:hover .method-tag {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Functional Progress Steps Modules */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.step-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-num {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    opacity: 0.04;
+    line-height: 1;
+    margin-bottom: 8px;
+    transition: var(--transition-smooth);
+}
+
+.step-icon {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+}
+
+.step-card:hover .step-num {
+    opacity: 0.15;
+    transform: translateY(-2px);
+}
+
+/* Visual Search CTA (Glassmorphism Core) */
+.cta-glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-large);
+    padding: 90px 40px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 44px;
+}
+
+/* Footer Section */
+.footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 100px 0 40px 0;
+    background: #080808;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 80px;
+    margin-bottom: 80px;
+}
+
+.footer-brand .logo {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 380px;
+    line-height: 1.6;
+}
+
+.footer-contacts h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -0.2px;
+}
+
+.footer-contacts p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+}
+
+.footer-link {
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.02);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 0 24px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Floating Interactive Context Nodes (Telegram Fab) */
+.floating-tg-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 32px rgba(255,255,255,0.12);
+    z-index: 999;
+    transition: var(--transition-smooth);
+}
+
+.floating-tg-btn:hover {
+    transform: scale(1.06) translateY(-4px);
+    box-shadow: 0 16px 40px rgba(255,255,255,0.22);
+}
+
+/* Intersection Observer Scroll Reveal Initial State */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Adaptive Interface Tree Breakpoints */
+@media (max-width: 992px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 56px;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        letter-spacing: -2px;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-image-wrapper {
+        height: 420px;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bg-giant-airplane {
+        width: 450px;
+        height: 450px;
+        bottom: -50px;
+        left: -100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.85rem;
+        margin-bottom: 40px;
+    }
+
+    .info-grid, .delivery-grid, .footer-content {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .advantages-grid, .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .advantage-card, .info-card, .delivery-card, .step-card {
+        padding: 36px 24px;
+    }
+
+    .cta-glass-card {
+        padding: 64px 24px;
+    }
+
+    .cta-content h2 {
+        font-size: 2.1rem;
+    }
+
+    .floating-tg-btn {
+        bottom: 24px;
+        right: 24px;
+        width: 52px;
+        height: 52px;
+    }
+}
