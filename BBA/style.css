@@ -179,6 +179,15 @@ nav{
     animation:floatImage 6s ease-in-out infinite;
 }
 
+.hero-image baxt{
+    width:100%;
+    border-radius:32px;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.08);
+    animation:floatImage 6s ease-in-out infinite;
+}
+
+
 @keyframes floatImage{
     0%,100%{
         transform:translateY(0px);
