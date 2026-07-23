@@ -47,6 +47,9 @@ revealOnScroll();
 const heroImage =
     document.querySelector('.hero-image img');
 
+const heroImage =
+    document.querySelector('.hero-image baxt');
+
 const floatingCard =
     document.querySelector('.floating-card');
 
